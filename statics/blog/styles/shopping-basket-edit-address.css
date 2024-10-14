@@ -1,0 +1,59 @@
+input[type='checkbox']:checked {
+  background-color: #1fdcc0;
+}
+input[type='checkbox']:checked:after {
+  content: '\2713';
+  color:white;
+  font-size: 20px;
+  top: -5px;
+  position: relative;
+  left: -2px;
+}
+input[type='checkbox']{
+  background:#fff;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  width: 15px !important;
+  height: 15px !important;
+  appearance:none;
+  border-radius:10%;
+  border: 1px solid #b3b3b3;
+  box-shadow: none;
+  font-size: 1em;
+}
+
+.address > ul {
+  list-style: none; /* Remove default bullets */
+}
+
+.address > ul > li::before {
+  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: orange; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  font-size: 25px;
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 2em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+}

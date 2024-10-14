@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Articles</title>
+    <!-- Add any additional styles or CSS links here -->
+</head>
+<body>
+    <h1>Review Articles</h1>
+
+    <a href="{% url 'home' %}">Home</a> <!-- Add the Home button here -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>First Keyword</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article.title }}</td>
+                <td>{{ article.category }}</td>
+                <td>{{ article.key_word_1 }}</td>
+                <td>
+                    <form method="post" action="{% url 'accept_article' article.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Accept">
+                    </form>
+                    <form method="post" action="{% url 'reject_article' article.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Reject">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add any additional scripts or JavaScript here if needed -->
+</body>
+</html>

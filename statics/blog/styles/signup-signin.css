@@ -1,0 +1,52 @@
+.WIDTHRES{
+  width: 50% !important;
+}
+
+input[type='checkbox']:checked {
+  background-color: #1fdcc0;
+}
+input[type='checkbox']:checked:after {
+  content: '\2713';
+  color:white;
+  font-size: 11px;
+  top: -1px;
+  position: relative;
+}
+input[type='checkbox']{
+  background:#fff;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  width: 12px !important;
+  height: 12px !important;
+  appearance:none;
+  border-radius:10%;
+  border: 1px solid #b3b3b3;
+  box-shadow: none;
+  font-size: 2px;
+}
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+  /**/
+  .WIDTHRES{
+    width: 75% !important;
+  }
+
+/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+}
