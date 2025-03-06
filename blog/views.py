@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from .models import Post	
 
-from .models import Comment,Addarticle
+from .models import Comment,Article
 
 from accounts.models import MyUser
 
@@ -12,35 +12,31 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-from . forms import SearchForm
 # a view for home
 def home_view(request):
-    searchform = SearchForm(request.GET)
-    if searchform.is_valid():
-        SearchText = searchform.cleaned_data["SearchText"]
-        posts_s = Post.objects.filter(title__contains=SearchText)
-        posts_t = Post.objects.filter(status=True)
-        posts = posts_s.intersection(posts_t)
 
-    else:
-
-
-        posts = Post.objects.filter(status=True)
+    posts = Post.objects.filter(status=True)
     # posts = Post.objects.all()
 
     context = {
         'posts': posts,
-        'searchform' : searchform
     }
 
     return render(request, 'blog/blogs.html', context)
+
+def SearchView(request):
+
+    query = request.GET.get('search','')
+    results = Post.objects.filter(name__iconcontaints=query) if query else []
+
+    return render(request, 'blog/search_resualts.html',{'resualts': results , 'query': query})
 
 
 # a view for detail of blog
 def blog_detail(request, id):
     post = Post.objects.get(pk=id, status=True)
     comments = post.comments.filter(active=True)
+    
 # Comment posted
     if request.method == 'POST':
         comment_content = request.POST.get('comment_content')
@@ -56,6 +52,7 @@ def blog_detail(request, id):
                     active=False,
                     post=post
                 )
+
                 messages.error(request, 'شما قبل این نظر را ارسال کردید')
             except Comment.DoesNotExist:
                 comment = Comment.objects.create(
@@ -71,9 +68,9 @@ def blog_detail(request, id):
     return render(request, 'blog/blog-detail.html', {'post': post, 'comments': comments})
 
 
-def addarticle_view(request):
+def AddarticleView(request):
     if request.method == 'POST':
-		# article=Addarticle(
+		# article=Article(
 		# 	user = request.POST['user'],
     	# 	category = request.POST['category'],
 		# 	title = request.POST['title'],
@@ -101,14 +98,14 @@ def addarticle_view(request):
 @login_required
 def review_articles(request):
     if request.user.is_superuser:
-        articles= Addarticle.objects.filter(status='draft')
+        articles= Article.objects.filter(status='draft')
         return render(request)
     else:
         return HttpResponse('what??bro you are normal user this page is for superuser')
         
 @login_required
 def    accept_article(request,article_id):
-    article=Addarticle.objects.get(id=article_id)
+    article=Article.objects.get(id=article_id)
     if request.user.is_superuser:
         article.status='published'
         article.save()
@@ -120,7 +117,7 @@ def    accept_article(request,article_id):
 
 @login_required
 def reject_article(request,article_id):
-    article=Addarticle.objects.get(id=article_id)
+    article=Article.objects.get(id=article_id)
     if request.user.is_superuser:
         article.status='archived'
         article.save()

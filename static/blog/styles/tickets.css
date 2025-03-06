@@ -1,0 +1,25 @@
+
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+
+	.TITLETABEL{
+		font-size: 11px !important;
+	}
+	/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+}

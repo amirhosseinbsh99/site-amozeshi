@@ -1,0 +1,75 @@
+.rating {
+   position: relative;
+   width: 145;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: .3em;
+   padding: 5px;
+   overflow: hidden;
+   border-radius: 20px;
+}
+
+.rating__result {
+   position: absolute;
+   top: 0;
+   left: 0;
+   transform: translateY(-10px) translateX(-5px);
+   z-index: -9;
+   font: 3em Arial, Helvetica, sans-serif;
+   color: #ffc328;
+   pointer-events: none;
+}
+
+.rating__star {
+   font-size: 1em;
+   cursor: pointer;
+   color: #ffc328;
+   transition: filter linear .3s;
+}
+
+.rating__star:hover {
+   filter: drop-shadow(1px 1px 4px gold);
+}
+
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+
+	/* 4th section */
+	#sliderBooks > li{
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	#sliderBooks > li > div{
+		width: 300px;
+	}
+	#sliderBooks > li > div> div > div > h6{
+		font-size: 14px;
+	}
+
+	#sliderBooks > li > div > div > div > div{
+		font-size: 11px !important;
+	}
+	#sliderBooks > li > div > div > div > div > div{
+		font-size: 10px !important;
+	}
+
+	/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+}

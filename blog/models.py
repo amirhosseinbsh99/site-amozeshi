@@ -87,7 +87,7 @@ class Comment(models.Model):
         return 'Comment {} by {}'.format(self.body, self.name)
     
 
-class Addarticle(models.Model):
+class Article(models.Model):
     author =models.ForeignKey(MyUser,on_delete=models.PROTECT)
     category =models.ForeignKey(Category,on_delete=models.PROTECT)
     title=models.CharField(max_length=800)

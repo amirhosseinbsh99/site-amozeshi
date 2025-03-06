@@ -1,0 +1,25 @@
+{
+  "name": "site-amozeshi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amirhosseinbsh99/site-amozeshi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/amirhosseinbsh99/site-amozeshi/issues"
+  },
+  "homepage": "https://github.com/amirhosseinbsh99/site-amozeshi#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.8",
+    "tailwindcss": "^4.0.8"
+  }
+}

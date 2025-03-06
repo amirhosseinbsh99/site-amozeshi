@@ -1,7 +1,7 @@
 from django.urls import path 
 
 from blog.views import review_articles,accept_article,reject_article
-
+from django.contrib.auth.views import LogoutView
 from .views import (
 						login_view , 
 
@@ -31,7 +31,7 @@ urlpatterns = [
 
 	path('register/' , register_view , name = 'register_view'),
 
-	path('logout_view/', logout_view, name = 'logout_view'),
+	path('logout/', LogoutView.as_view(next_page='blog:blog_home'), name='logout_view'),
 
 	path('kave_negar_token_send/',kave_negar_token_send,name = 'kave_negar_token_send'),
     

@@ -1,0 +1,34 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body{
+	font-family: 'Vazir', sans-serif;
+}
+
+/* reboot bootstrap */
+
+.btn-outline-primary{
+	border-radius: 12px;
+	color: #00d5b6;
+	border-color: #00d5b6;
+}
+.btn-outline-primary:hover{
+	background-color: #00d5b6;
+	border-color: #00d5b6;
+}
+
+.btn-primary{
+	border-radius: 12px;
+	background-color: #00d5b6;
+	border-color: #00d5b6;
+}
+.btn-primary:hover{
+	background-color: #00d5b6;
+	border-color: #00d5b6;
+}
+
+.lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
+    background-color: #0dd7b9 !important;
+}

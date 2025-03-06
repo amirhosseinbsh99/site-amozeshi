@@ -1,0 +1,152 @@
+.imageCourse{
+
+}
+.imageCourse >  a{
+	height: 0;
+	position: absolute;
+	text-decoration: none;
+	color: white;
+	left: 0;
+	top: 0;
+	width: 100%;
+	font-size: 18px;
+	display: flex;
+	background-color: rgba(0, 0, 0 , 0.3);
+	border-radius: 14px;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+
+}
+.imageCourse:hover > a{
+	height: 100%;
+	opacity: 1;
+	transition: 0.2s;
+}
+
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+
+	/* first section */
+	.TITLE{
+		font-size: 16px !important;
+		line-height: 40px !important;
+	}
+	.DES{
+		font-size: 12px !important;
+		text-align: center;
+	}
+	.BTNRESH{
+		padding: 5px 15px !important;
+		font-size: 13px !important;
+	}
+
+	/* seccond section */
+	.TWOSECTION{
+		width: 250px;
+	}
+	.STARTTITLE{
+		font-size: 13px;
+	}
+	.STARTTITLETWO{
+		font-size: 12px;
+	}
+	.STARTTITLETHREE{
+		top: 34% !important;
+		height: 40px !important;
+		width: 40px !important;
+	}
+
+	/* 3th section */
+	.TITLETHIRDSECTION{
+		font-size: 14px !important;
+
+	}
+	#sliderCourses > li{
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	#sliderCourses > li > div{
+		width: 280px;
+	}
+
+	/* 4th section */
+	#sliderBooks > li{
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	#sliderBooks > li > div{
+		width: 300px;
+	}
+	#sliderBooks > li > div> div > div > h6{
+		font-size: 14px;
+	}
+
+	#sliderBooks > li > div > div > div > div{
+		font-size: 11px !important;
+	}
+	#sliderBooks > li > div > div > div > div > div{
+		font-size: 10px !important;
+	}
+
+	/* 5th section */
+	.TEACHERIMGBOX > img{
+    	height: 115px !important;
+	}
+	.TITLEFORTEACHER{
+		font-size: 18px !important;
+	}
+	.TITLETEACHER{
+		font-size: 16px !important;
+	}
+	.TITLETEACHERSECCOND{
+		font-size: 12px !important;
+	}
+
+	/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+	/* for 6th secion */
+	.TITLEFOUREDSECTION{
+		font-size: 14px !important;
+	}
+
+	#sliderBooksTwo > li{
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	#sliderBooksTwo > li > div{
+		width: 300px;
+	}
+	#sliderBooksTwo > li > div> div > div > h6{
+		font-size: 14px;
+	}
+
+	#sliderBooksTwo > li > div > div > div > div{
+		font-size: 11px !important;
+	}
+	#sliderBooksTwo > li > div > div > div > div > div{
+		font-size: 10px !important;
+	}
+
+	
+
+
+}

@@ -1,0 +1,44 @@
+.is-valid{
+	border: 1px solid green !important;
+	color: #323232 !important;
+}
+
+.form{
+	display: none;
+}
+.form.active{
+	display: flex;
+}
+
+.myBtn{
+	display: none;
+}
+.myBtn.active{
+	display: flex;
+}
+.myBtnTwo{
+	display: flex;
+}
+.myBtnTwo.active{
+	display: none;
+}
+/* for responsive less than 600 px */
+
+@media screen and (max-width: 600px){
+
+/* footer */
+	.TITLEFOOTER{
+		font-size: 14px !important;
+		text-align: center;
+	}
+	li.ps-md-4> a{
+		font-size: 11px !important;
+	}
+	.FOOTERBUTTON{
+		padding: 5px 20px !important;
+	}
+	.FOOTERTITLELASTONE{
+		font-size: 11px ;
+	}
+
+}

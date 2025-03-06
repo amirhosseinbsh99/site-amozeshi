@@ -1,19 +1,22 @@
 
 from django.urls import path,include
 
-from .views import home_view , blog_detail,addarticle_view
+from .views import home_view , blog_detail,AddarticleView,SearchView
 
 
-app_name = 'blog'
 urlpatterns = [
 
     path('' , home_view , name = 'blog_home'),
 
-    path('<id>/' , blog_detail , name = 'blog_detail'),
+    path('blogs/<id>/' , blog_detail , name = 'blog_detail'),
 
-    path('addarticle/' , addarticle_view , name = 'addarticle'),  
+    path('addarticle/' , AddarticleView , name = 'addarticle'),  
 
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
+
+    path('search/' , SearchView , name = 'search'),
+
+ 
 
 
 

@@ -12,9 +12,12 @@ from django.contrib.auth import logout
 
 from kavenegar import *
 
-from blog.models import Addarticle,Category
+from blog.models import Article,Category
 
 import random
+
+from django.contrib.auth.models import User
+
 
 from django.contrib.auth.decorators import login_required
 
@@ -76,8 +79,12 @@ def login_view(request):
 
 @login_required
 def dashboard_view(request):
+	if request.user.is_admin == True:
+		total_users = MyUser.objects.count()
 
-	return render(request , 'registerations/dashboard.html')
+	return render(request , 'User/dashboard.html')
+
+
 
 def register_view(request):
 	if not request.user.is_authenticated:
@@ -218,7 +225,7 @@ def addarticle_view(request):
         author = request.user
         category_id = Category.objects.get(id=request.POST['category'])
 
-        article=Addarticle(
+        article=Article(
             author = author,
             category = category_id,
             title = request.POST['title'],

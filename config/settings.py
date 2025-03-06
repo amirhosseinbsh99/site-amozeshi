@@ -1,5 +1,6 @@
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,20 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
+    'django_browser_reload',
     'accounts.apps.AccountsConfig',
 
     'blog.apps.BlogConfig',
-
+    'tailwind',
+    'theme',
     'kavenegar',
     'star_ratings',
-    
-
-
-    
-
-
-
 ]
 
 MIDDLEWARE = [
@@ -53,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -125,10 +121,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATIC_ROOT = BASE_DIR / 'static'
+# The directory where Django will collect all static files
+STATIC_ROOT = BASE_DIR / 'statics'
 
-STATICFILES_DIRS = [    
-    BASE_DIR / 'statics',
+# The directories where Django will look for static files in development
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # For development static files, make sure this is separate from STATIC_ROOT
 ]
 
 MEDIA_URL = '/media/'
@@ -141,3 +139,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+NPM_BIN_PATH = os.path.join("C:", "Program Files", "nodejs", "npm")
+NODE_BIN_PATH = os.path.join("C:", "Program Files", "nodejs", "node")
