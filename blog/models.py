@@ -6,17 +6,8 @@ from django.contrib.auth import get_user_model
 
 from accounts.models import MyUser
 
-# Create your models here.
 
-class Post(models.Model):
-
-    '''
-
-        THIS IS A MODEL FOR POST OBJECTS...
-
-    ''' 
-
-    # Foreign Key ONE TO ONE WITH REPEAT BUT ONE TO ONE WITH NO REPEAT
+class Course(models.Model):
 
     category = models.ForeignKey("Category" , null = True ,  blank = True , on_delete = models.SET_NULL)
 
@@ -40,7 +31,7 @@ class Post(models.Model):
 
     updated_date_jalali = jmodels.jDateField(auto_now = True , blank = True , null = True)
 
-    # is author
+    teacher = models.CharField(max_length = 150)
 
 
     # Methods
@@ -74,7 +65,7 @@ class Category(models.Model):
         return f'{self.id} , {self.title}'
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    post = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
@@ -96,9 +87,8 @@ class Article(models.Model):
     key_word_2=models.CharField(max_length=100,default=None)
     key_word_3=models.CharField(max_length=100,default=None)    
     body= models.TextField(default=None)
-    #author = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-
     created_date_jalali = jmodels.jDateField(auto_now_add = True , blank = True , null = True)
+
     STATUS_CHOICES={
         ('draft','Draft'),
         ('published','Published'),

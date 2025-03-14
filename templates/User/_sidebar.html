@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sidebar</title>
+    <style>
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            width: 250px;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: all 0.3s;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-radius: 6px;
+            transition: 0.3s;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .sidebar a:hover {
+            background-color: #00d5b6;
+            transform: translateX(5px);
+        }
+        .sidebar .icon {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{% url 'blog_home' %}" class="text-sm"><i class="icon">🏠</i> صفحه اصلی</a>
+        <h2 class="text-center font-semibold">داشبورد</h2>
+        <a href="{% url 'accounts:dashboard_view' %}" class="text-sm"><i class="icon">📊</i> آمار</a>
+        <a href="{% url 'accounts:courses_view' %}" class="text-sm"><i class="icon">📝</i> دوره‌ها</a>
+        <a href="#" class="text-sm"><i class="icon">📝</i> مقالات</a>
+        <a href="#" class="text-sm"><i class="icon">⚙️</i> تنظیمات</a>
+    </div>
+    
+</body>
+</html>

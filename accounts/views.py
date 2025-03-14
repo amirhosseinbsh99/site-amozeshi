@@ -1,8 +1,13 @@
-from django.shortcuts import render , redirect 
+from django.shortcuts import render , redirect ,get_object_or_404
+
 
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 
 from .models import MyUser
+
+from blog.models import Course
 
 from django.contrib.auth.hashers import check_password
 
@@ -16,7 +21,6 @@ from blog.models import Article,Category
 
 import random
 
-from django.contrib.auth.models import User
 
 
 from django.contrib.auth.decorators import login_required
@@ -80,9 +84,60 @@ def login_view(request):
 @login_required
 def dashboard_view(request):
 	if request.user.is_admin == True:
-		total_users = MyUser.objects.count()
+		user_count = MyUser.objects.count()
+		course_count = Course.objects.count()
+		article_count = Article.objects.count()
 
-	return render(request , 'User/dashboard.html')
+	return render(request , 'User/dashboard.html' , {'user_count': user_count,'course_count': course_count,'article_count': article_count})
+
+@login_required
+def courses_view(request):
+    if request.user.is_admin:
+        query = request.GET.get('q', '')
+        courses = Course.objects.all()
+
+        if query:
+            courses = courses.filter(name__icontains=query)  # Adjust 'name' to match your model
+
+        return render(request, 'User/courses.html', {'courses': courses, 'query': query})
+	
+
+@login_required
+def edit_course_view(request, course_id):
+    try:
+        # Fetch the course by its ID
+        course = Course.objects.get(id=course_id)
+    except ObjectDoesNotExist:
+        raise Http404("دوره یافت نشد")
+
+    if request.method == 'POST':
+        # Process form submission to update course details
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        image = request.FILES.get('image')
+        teacher = request.POST.get('teacher')
+        time_of_study = request.POST.get('time_of_study')
+
+        # Update course fields
+        course.title = title
+        course.content = content
+        course.teacher = teacher
+        course.time_of_study = time_of_study
+
+        # Save image if a new one was uploaded
+        if image:
+            course.image = image
+
+        course.save()  # Save the course instance
+
+        # Add a success message to notify the user
+        messages.success(request, "دوره با موفقیت ویرایش شد!")
+
+        # Redirect to the courses view or another relevant page
+        return redirect('accounts:courses_view')
+
+    return render(request, 'User/course_detail.html', {'course': course})
+
 
 
 
@@ -151,7 +206,7 @@ def register_view(request):
 				#User = MyUser.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password,phone_number=phone_number)
 						
 					try:
-						token2 = random.randint(10000, 99999)
+						token2 = 12345
 
 
 						api = KavenegarAPI('7937386A425358714D3072664F59414B4D79416D6E444C534C55357A724E33395258437661466F34727A343D')
@@ -160,7 +215,7 @@ def register_view(request):
 						params = {
 						'token': token2,
 						'receptor':'',
-						'template': 'fayateachh',
+						'template': 'amir',
 						'type': 'sms'
 						}
 						response = api.verify_lookup(params)
@@ -195,7 +250,7 @@ def register_view(request):
 def logout_view(request):
 
 	logout(request)
-	return redirect('blog:blog_home')
+	return redirect('blog_home')
 
 def kave_negar_token_send(request):
 

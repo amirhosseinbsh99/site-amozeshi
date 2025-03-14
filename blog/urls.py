@@ -1,7 +1,7 @@
 
 from django.urls import path,include
 
-from .views import home_view , blog_detail,AddarticleView,SearchView
+from .views import home_view , blog_detail,AddarticleView,SearchView,about_us,contact_us
 
 
 urlpatterns = [
@@ -10,11 +10,17 @@ urlpatterns = [
 
     path('blogs/<id>/' , blog_detail , name = 'blog_detail'),
 
+    path('search/' , SearchView , name = 'search'),
+
+
     path('addarticle/' , AddarticleView , name = 'addarticle'),  
 
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
 
-    path('search/' , SearchView , name = 'search'),
+
+    path('about/', about_us, name='about'),
+
+    path('contact/', contact_us, name='contact'),
 
  
 

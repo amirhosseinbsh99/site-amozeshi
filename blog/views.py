@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
 
-from .models import Post	
+from .models import Course	
 
 from .models import Comment,Article
 
@@ -15,11 +15,11 @@ from django.contrib.auth.decorators import login_required
 # a view for home
 def home_view(request):
 
-    posts = Post.objects.filter(status=True)
+    courses = Course.objects.filter(status=True)
     # posts = Post.objects.all()
 
     context = {
-        'posts': posts,
+        'courses': courses,
     }
 
     return render(request, 'blog/blogs.html', context)
@@ -27,15 +27,15 @@ def home_view(request):
 def SearchView(request):
 
     query = request.GET.get('search','')
-    results = Post.objects.filter(name__iconcontaints=query) if query else []
+    results = Course.objects.filter(name__iconcontaints=query) if query else []
 
     return render(request, 'blog/search_resualts.html',{'resualts': results , 'query': query})
 
 
 # a view for detail of blog
 def blog_detail(request, id):
-    post = Post.objects.get(pk=id, status=True)
-    comments = post.comments.filter(active=True)
+    course = Course.objects.get(pk=id, status=True)
+    comments = course.comments.filter(active=True)
     
 # Comment posted
     if request.method == 'POST':
@@ -50,13 +50,13 @@ def blog_detail(request, id):
                     name=request.user.first_name,
                     email=request.user.email,
                     active=False,
-                    post=post
+                    course=course
                 )
 
                 messages.error(request, 'شما قبل این نظر را ارسال کردید')
             except Comment.DoesNotExist:
                 comment = Comment.objects.create(
-                    post=post,
+                    course=course,
                     name=request.user.first_name,
                     email=request.user.email,
                     body=comment_content,
@@ -65,7 +65,9 @@ def blog_detail(request, id):
                 messages.success(request, 'نظر شما ثبت شد')
                 return redirect('.')
 
-    return render(request, 'blog/blog-detail.html', {'post': post, 'comments': comments})
+    return render(request, 'blog/blog-detail.html', {'course': course, 'comments': comments})
+
+
 
 
 def AddarticleView(request):
@@ -126,3 +128,10 @@ def reject_article(request,article_id):
         return HttpResponse('what??bro you are normal user this page is for superuser')
 
     return redirect('../')  
+
+
+def about_us(request):
+    return render(request, 'blog/about-us.html')
+
+def contact_us(request):
+    return render(request, 'blog/contact-us.html')

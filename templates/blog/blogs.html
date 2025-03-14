@@ -13,26 +13,22 @@
     <div class="container" dir="rtl">
       <div class="row">
 
-        
-        
-      {% for post in posts %}
-        
+      {% for course in courses %}
 
-      
           <!-- card -->
           <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center align-items-center mb-3">
             <div class="d-flex w-100 justify-content-center align-items-center bg-white flex-column" style="border: 1px solid #eee;border-radius: 10px;">
               <div class="position-relative w-100 d-flex justify-content-center align-items-center ">
-                <a href="{% url 'blog:blog_detail' post.id %}" class="w-100 d-flex justify-content-center align-items-center">
-                  <img src="{{post.image.url}}" alt="IMAGE" class="img-fluid w-100 p-3" style="border-radius:30px;height: 230px;">
-                  <span class="position-absolute d-flex justify-content-center align-items-center p-1" style="color:#6c6c6c;background-color: rgba(255,255,255,0.7);top: 23px;left: 23px;border-radius: 8px;font-size: 13px;">{{post.category.title}}</span>
+                <a href="{% url 'blog_detail' course.id %}" class="w-100 d-flex justify-content-center align-items-center">
+                  <img src="{{course.image.url}}" alt="IMAGE" class="img-fluid w-auto p-2" style="border-radius:30px;height: 230px;">
+                  <span class=" text-white position-absolute d-flex justify-content-center align-items-center p-1" style="color:#6c6c6c;background-color: rgb(66, 218, 132);top: 23px;left: 23px;border-radius: 8px;font-size: 13px;">{{course.category.title}}</span>
                 </a>
               </div>
               <div class="px-4 mb-1 w-100" dir="rtl">
-                <h6 style="font-size:17px;color:#404040;">{{post.title}}</h6>
+                <h6 style="font-size:17px;color:#404040;">{{course.title}}</h6>
               </div>
               <div class="px-4 mb-1 w-100" dir="rtl">
-                <h6 style="font-size:12px;color:#959595;">{{post.content|giyo}}</h6>
+                <h6 style="font-size:12px;color:#959595;">{{course.content|giyo}}</h6>
               </div>
               <div class="px-4 d-flex pb-3 justify-content-start align-items-center w-100" dir="rtl">
                 <img src="{% static 'blog/images/clockblog.png' %}" alt="ICON" height="18px">
@@ -40,7 +36,7 @@
                   زمان مطالعه : 
                 </div>
                 <div>
-                  {{post.time_of_study}} دقیقه
+                  {{course.time_of_study}} دقیقه
                 </div>
               </div>
             </div>

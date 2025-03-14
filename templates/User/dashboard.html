@@ -1,10 +1,29 @@
 {% load static %}
-{% load static tailwind_tags %}
+{% load tailwind_tags %}
 {% load django_browser_reload %}
+
 {% tailwind_css %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+    <link rel="icon" type="image/x-icon" href="{% static 'blog/images/logo.ico' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'blog/plugins/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- cdn font vazir -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
+    <!-- lightslider css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/lightslider.css' %}">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/blogs.css' %}">
+    <!-- star rating -->
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>داشبورد</title>
@@ -12,119 +31,194 @@
         body {
             background-color: #f8f9fa; /* Light gray */
             font-family: 'Tahoma', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
         }
-        .sidebar {
-            background-color: #f1f1f1;
-            width: 250px;
-            padding: 20px;
-        }
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            border-radius: 6px;
-            transition: 0.3s;
-        }
-        .sidebar a:hover {
-            background-color: #00d5b6;
-            color: white;
-        }
+        
         .header {
             background: white;
             padding: 15px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .header .profile {
+            background-color: #00d5b6;
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: white;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .header .profile:hover {
+            background-color: #00c0a5;
+            transform: scale(1.05);
         }
         .card {
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
         }
         .btn-custom {
             background-color: #00d5b6;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 6px;
             transition: 0.3s;
+            font-size: 1.1rem;
+            text-transform: uppercase;
         }
         .btn-custom:hover {
             background-color: #00c0a5;
+            transform: translateY(-3px);
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            width: calc(100% - 250px);
+            overflow-y: auto;
+            background-color: #e9ecef;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .widget {
+            background-color: #ffffff;
+            padding: 30px;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .widget .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+        }
+        .widget .count {
+            font-size: 32px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .widget .icon {
+            font-size: 35px;
+            color: #00d5b6;
+        }
+        .sidebar a.active {
+            background-color: #00d5b6;
+            transform: translateX(5px);
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
 
-    <div class="flex h-screen">
-        {% if request.user.is_authenticated %}
-        <!-- Sidebar -->
-        <div class="sidebar">
-        {% if is_admin == true %}
-            <h2 class="text-xl font-bold mb-5 text-gray-700">مدیریت</h2>
-            
-            <ul>
-                <li><a href="dashboard/">خانه</a></li>
-                <li><a href="#">کاربران</a></li>
-                <li><a href="#">دوره ها</a></li>
-                <li><a href="#">بلاگ ها</a></li>
-            </ul>
-            {% else %}
-            <h2 class="text-xl font-bold mb-5 text-gray-700">ناحیه کاربری</h2>
-            <ul>
-                <li><a href="#">خانه</a></li>
-                <li><a href="#">دوره‌های من</a></li>
-                <li><a href="#">تنظیمات</a></li>
-            </ul>
-            {% endif %}
+    <!-- Sidebar -->
+    {% include 'User/_sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="text-xl font-semibold text-gray-700">
+                {% if is_admin == true %}داشبورد مدیر{% else %}داشبورد کاربر{% endif %}
+            </h1>
+
         </div>
-        {% endif %}
 
-        <!-- Main Content -->
-        <div class="flex-1 p-6">
-            <!-- Navbar -->
-            <div class="header flex justify-between items-center">
-                <h1 class="text-xl font-semibold text-gray-700">
-                    {% if is_admin %}داشبورد مدیر{% else %}داشبورد کاربر{% endif %}
-                </h1>
-                <a href="{% url 'accounts:logout_view' %}" class="btn-custom">خروج</a>
-            </div>
-
-            <!-- Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <!-- Cards and Widgets -->
+        <div class="grid mt-3 px-4">
             {% if request.user.is_authenticated %}
                 {% if is_admin == true %}
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">تعداد کل کاربران</h2>
-                    <p class="text-2xl font-semibold text-gray-900">1,234</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-center">
+                    <div class="widget">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="title">تعداد دوره‌ها</p>
+                                <p class="count">{{ course_count }}</p>
+                            </div>
+                            <i class="icon">📚</i>
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="title">تعداد کاربران </p>
+                                <p class="count">{{ user_count }}</p>
+                            </div>
+                            <i class="icon">👥</i>
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="title">تعداد مقالات</p>
+                                <p class="count">{{ article_count }}</p>
+                            </div>
+                            <i class="icon">📃</i>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="title">تعداد خریداران دوره (فیکس شود)</p>
+                                <p class="count">{{ article_count }}</p>
+                            </div>
+                            <i class="icon">💳</i>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">درآمد کل</h2>
-                    <p class="text-2xl font-semibold text-gray-900">$12,345</p>
-                </div>
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">تعداد دوره‌ها</h2>
-                    <p class="text-2xl font-semibold text-gray-900">567</p>
-                </div>
+
                 {% else %}
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">دوره‌های من</h2>
-                    <p class="text-2xl font-semibold text-gray-900">5</p>
-                </div>
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">درس‌های تکمیل شده</h2>
-                    <p class="text-2xl font-semibold text-gray-900">15</p>
-                </div>
-                <div class="card">
-                    <h2 class="text-lg font-bold text-gray-700">امتحانات آینده</h2>
-                    <p class="text-2xl font-semibold text-gray-900">2</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div class="widget">
+                        <p class="title">دوره‌های من</p>
+                        <p class="count">5</p>
+                    </div>
+
+                    <div class="widget">
+                        <p class="title">درس‌های تکمیل شده</p>
+                        <p class="count">15</p>
+                    </div>
+
+                    <div class="widget">
+                        <p class="title">امتحانات آینده</p>
+                        <p class="count">2</p>
+                    </div>
                 </div>
                 {% endif %}
             {% else %}
-                <p class="text-center text-gray-700 mt-6">
-                    لطفاً <a href="{% url 'login' %}" class="text-blue-500">وارد شوید</a> تا به داشبورد دسترسی داشته باشید.
-                </p>
+            <p class="text-center text-gray-700 mt-6">
+                لطفاً <a href="{% url 'login' %}" class="text-blue-500">وارد شوید</a> تا به داشبورد دسترسی داشته باشید.
+            </p>
             {% endif %}
-            </div>
         </div>
     </div>
 
 </body>
 </html>
+
+{% endblock content %}

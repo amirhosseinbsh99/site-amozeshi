@@ -1,0 +1,173 @@
+{% load static %}
+{% load tailwind_tags %}
+{% load django_browser_reload %}
+
+{% tailwind_css %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="icon" type="image/x-icon" href="{% static 'blog/images/logo.ico' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'blog/plugins/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- cdn font vazir -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/blogs.css' %}">
+    <title>دوره‌ها</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray */
+            font-family: 'Tahoma', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #f8f9fa;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+        .course-card {
+            background: white;
+            color:black;
+            padding: 20px;
+            width:200;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            text-decoration: none; /* Remove underline from the link */
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block !important;  /* Force show button in mobile view */
+    }
+}
+
+/* Toggle button */
+.sidebar-toggle {
+    display: none;  /* Hide by default for desktop */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        {% include 'User/_sidebar.html' %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Toggle Button for Mobile -->
+         <button class="sidebar-toggle" id="sidebarToggle" onclick="sidebarToggle()">☰</button>
+
+        <!-- Header -->
+        <div class="header py-4 px-6 bg-white shadow-lg">
+            <h1 class="text-xl font-semibold text-gray-700">دوره‌ها</h1>
+        </div>
+
+        <!-- Search Bar -->
+        <input type="text" class="search-bar" placeholder="جستجو در دوره‌ها🔍">
+
+        <!-- Courses -->
+        <div class="grid mt-3 px-4">
+            {% if courses %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    {% for course in courses %}
+                    <a href="{% url 'accounts:edit_course_view' course.id %}" class="course-card"> 
+                        <h3 class="font-semibold text-xl">{{ course.title|slice:":30" }}</h3>
+                        <img src="{{ course.image.url }}" alt="Default Image" class=" w-100 h-48 object-cover rounded-lg">
+                        <p class="text-gray-600 mt-2">{{ course.content|slice:":50" }}...</p>
+                     </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+            <p class="text-center text-gray-700 mt-5">هیچ دوره‌ای برای نمایش وجود ندارد.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar for Mobile
+        function sidebarToggle() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+
+{% endblock content %}

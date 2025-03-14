@@ -8,16 +8,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 
-
-
-# Create your models here.
-
-
 class MyUser(AbstractUser):
 
-	'''
-		This model for custom user
-	'''
 	phone_number = models.CharField(max_length = 250 , null = True , blank = True)
 
 	token_send = models.IntegerField(null = True , blank = True)     

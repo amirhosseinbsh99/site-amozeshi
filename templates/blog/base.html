@@ -1,7 +1,9 @@
 {% load static %}
 {% load static tailwind_tags %}
 {% load django_browser_reload %}
+
 {% tailwind_css %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,10 +51,6 @@
                 <input class="w-full max-w-xl p-2 text-lg rounded-lg " style="width: 400px;" type="search" placeholder="جستجو" aria-label="Search" dir="rtl">
               </form>
               
-
-
-
-
                   <div class="w-50 d-none d-md-block">
                     <form class="position-relative" method="GET" action="/blog/">
                     
@@ -80,13 +78,6 @@
                       </div>
                     </a>
                   </div>  
-
-
-                  
-                  
-                  
-                  
-
                   <!-- before login -->
                   <div class="d-flex justify-content-center align-items-center">
                     <div class="p-1 mx-2" style="border-radius:50%;background-color: #f1f1f1;">
@@ -116,11 +107,11 @@
                           
                         </div>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
-                          <li style="text-align: right;"><a class="dropdown-item" href="#">پروفایل</a></li>
+                          <li style="text-align: right;"><a class="dropdown-item" href="{% url 'accounts:dashboard_view' %}">داشبورد</a></li>
                           <li style="text-align: right;"><a class="dropdown-item" href="#">دوره جدید</a></li>
                           <li style="text-align: right;"><a class="dropdown-item" href="#">تنظیمات</a></li>
                           <li style="text-align: right;"><hr class="dropdown-divider"></li>
-                          <li style="text-align: right;"><a class="dropdown-item" href="../../accounts/logout_view">خروج</a></li>
+                          <li style="text-align: right;"><a class="dropdown-item" href="{% url 'accounts:logout_view' %}">خروج</a></li>
                         </ul>
                       </div>
                     <!-- </a>
@@ -150,19 +141,19 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" dir="rtl">
                   <li class="nav-item mt-3">
-                    <a class="nav-link active" aria-current="page" href="#" style="color:#646464;">صفحه اصلی</a>
+                    <a class="nav-link active" aria-current="page" href="/" style="color:#646464;">صفحه اصلی</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" style="color:#646464;">دوره ها</a>
+                    <a class="nav-link active" aria-current="page" href="/courses" style="color:#646464;">دوره ها</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="../accounts/dashboard/" style="color:#646464;">داشبورد</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" style="color:#646464;">درباره ما</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'about' %}" style="color:#646464;">درباره ما</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" style="color:#646464;">تماس با ما</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'contact' %}" style="color:#646464;">تماس با ما</a>
                   </li>
 
                 </ul>
@@ -186,11 +177,11 @@
               <div class="col-12 col-md-6 my-2">
 
                 <ul class="list-unstyled d-flex m-0" style="" dir="rtl">
-                <li class="ps-4"><a class="text-decoration-none" href="#" style="color:#646464;font-size: 14px;">صفحه اصلی</a></li>
-                <li class="px-4"><a class="text-decoration-none" href="#" style="color:#646464;font-size: 14px;">دوره ها</a></li>
+                <li class="ps-4"><a class="text-decoration-none" href="/" style="color:#646464;font-size: 14px;">صفحه اصلی</a></li>
+                <li class="px-4"><a class="text-decoration-none" href="/courses" style="color:#646464;font-size: 14px;">دوره ها</a></li>
                 <li class="px-4"><a class="text-decoration-none" href="../accounts/dashboard/" style="color:#646464;font-size: 14px;">داشبورد</a></li>
-                <li class="px-4"><a class="text-decoration-none" href="#" style="color:#646464;font-size: 14px;">درباره ما</a></li>
-                <li class="px-4"><a class="text-decoration-none" href="#" style="color:#646464;font-size: 14px;">تماس با ما</a></li>
+                <li class="px-4"><a class="text-decoration-none" href="{% url 'about' %}" style="color:#646464;font-size: 14px;">درباره ما</a></li>
+                <li class="px-4"><a class="text-decoration-none" href="{% url 'contact' %}" style="color:#646464;font-size: 14px;">تماس با ما</a></li>
               </ul>
                 
               </div>
@@ -245,11 +236,11 @@
               <div class="row w-100 justify-content-center align-items-center">
                 <div class="col-12 col-md-6 d-flex justify-content-center align-items-center justify-content-md-start">
                   <ul class="list-unstyled d-flex m-0">
-                    <li class="ps-md-4 ps-2"><a href="#" class="text-decoration-none" style="color:#646464;font-size: 14px;">صفحه اصلی</a></li>
+                    <li class="ps-md-4 ps-2"><a href="/" class="text-decoration-none" style="color:#646464;font-size: 14px;">صفحه اصلی</a></li>
                     <li class="ps-md-4 ps-2"><a href="#" class="text-decoration-none" style="color:#646464;font-size: 14px;">دوره ها</a></li>
                     <li class="ps-md-4 ps-2"><a href="../accounts/dashboard/" class="text-decoration-none" style="color:#646464;font-size: 14px;">داشبورد</a></li>
-                    <li class="ps-md-4 ps-2"><a href="#" class="text-decoration-none" style="color:#646464;font-size: 14px;">درباره ما</a></li>
-                    <li class="ps-md-4 ps-2"><a href="#" class="text-decoration-none" style="color:#646464;font-size: 14px;">تماس با ما</a></li>
+                    <li class="ps-md-4 ps-2"><a href="{% url 'about' %}" class="text-decoration-none" style="color:#646464;font-size: 14px;">درباره ما</a></li>
+                    <li class="ps-md-4 ps-2"><a href="{% url 'contact' %}" class="text-decoration-none" style="color:#646464;font-size: 14px;">تماس با ما</a></li>
                   </ul>
                 </div>
                 <div class="col-12 col-md-6 mt-md-0 mt-5 d-flex justify-content-center align-items-center ">
@@ -324,7 +315,7 @@
   
               <div class="row w-100 justify-content-center align-items-center">
   
-                <div class="col-12 col-md-7 d-flex justify-content-center align-items-center justify-content-md-end" style="text-align: left;color:#a4a4a4;font-size: 13px;"><b class="mx-1" style="color:#00d5b6;">Developed By DreaMix</b></div>
+                <div class="col-12 col-md-7 d-flex justify-content-center align-items-center justify-content-md-end" style="text-align: left;color:#a4a4a4;font-size: 13px;"><b class="mx-1" style="color:#00d5b6;">Developed By Amirhosseinbsh</b></div>
   
                 <div class="col-12 col-md-5 d-flex justify-content-md-end align-items-center justify-content-center mt-md-0 mt-4">
                   <a href="#" class="text-decoration-none" style="color: #00d5b6;">

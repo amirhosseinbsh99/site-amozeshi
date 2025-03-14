@@ -1,0 +1,205 @@
+{% load static %}
+{% load tailwind_tags %}
+
+{% tailwind_css %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="icon" type="image/x-icon" href="{% static 'blog/images/logo.ico' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'blog/plugins/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/styles/blogs.css' %}">
+    <title>ویرایش دوره</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Tahoma', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .btn-custom {
+            background-color: #00d5b6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 7px;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration:none;
+            
+        }
+        .btn-custom:hover {
+            background-color: #00c0a5;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        /* Hide the file input */
+        #image-input {
+            display: none;
+        }
+
+        /* Style for clickable image */
+        .image-container {
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Edit icon style (initially hidden) */
+        .edit-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 18px;
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0; /* Hide by default */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Show the edit icon on hover */
+        .image-container:hover .edit-icon {
+            opacity: 1; /* Show the icon */
+        }
+
+        .edit-icon:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+                /* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block !important;  /* Force show button in mobile view */
+    }
+}
+
+/* Toggle button */
+.sidebar-toggle {
+    display: none;  /* Hide by default for desktop */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+}
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    {% include 'User/_sidebar.html' %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+    <!-- Toggle Button for Mobile -->
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="sidebarToggle()">☰</button>
+        <div class="container">
+            <h1 class="text-3xl font-bold text-gray-700 mb-4">ویرایش دوره</h1>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Course Image -->
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-700 font-semibold">تصویر دوره:</label>
+                    <!-- Make the image clickable with an edit icon -->
+                    <label for="image-input" class="image-container">
+                        <img id="course-image" src="{% if course.image %}{{ course.image.url }}{% else %}/static/images/default-course.jpg{% endif %}" alt="{{ course.title }}" class="w-50 h-64 object-cover rounded-lg mb-4">
+                        <div class="edit-icon">✏️</div>
+                    </label>
+                    <!-- Hidden file input field -->
+                    <input type="file" name="image" id="image-input" class="form-input">
+                </div>
+
+                <!-- Course Title -->
+                <div class="mb-4">
+                    <label for="title" class="block text-gray-700 font-semibold">عنوان دوره</label>
+                    <input type="text" name="title" id="title" value="{{ course.title }}" class="form-input" required>
+                </div>
+
+                <!-- Course content -->
+                <div class="mb-4">
+                    <label for="content" class="block text-gray-700 font-semibold">توضیحات دوره</label>
+                    <textarea name="content" id="content" class="form-input" rows="4" required>{{ course.content }}</textarea>
+                </div>
+                <!-- Course Title -->
+                <div class="mb-4">
+                    <label for="time_of_study" class="block text-gray-700 font-semibold">مقدار زمان دوره</label>
+                    <input type="text" name="time_of_study" id="time_of_study" value="{{ course.time_of_study }}" class="form-input" required>
+                </div>
+                <!-- Course Title -->
+                <div class="mb-4">
+                    <label for="teacher" class="block text-gray-700 font-semibold">مدرس دوره</label>
+                    <input type="text" name="teacher" id="teacher" value="{{ course.teacher }}" class="form-input" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-4">
+                    <button type="submit" class="btn-custom">ذخیره تغییرات</button>
+                </div>
+            </form>
+
+            <a href="{% url 'accounts:courses_view' %}" class="btn-custom">بازگشت</a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to preview the selected image
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var imageElement = document.getElementById('course-image');
+                imageElement.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+        // Toggle Sidebar for Mobile
+        function sidebarToggle() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+{% endblock content %}
