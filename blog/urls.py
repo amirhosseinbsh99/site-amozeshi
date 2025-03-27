@@ -12,11 +12,9 @@ urlpatterns = [
 
     path('search/' , SearchView , name = 'search'),
 
-
     path('addarticle/' , AddarticleView , name = 'addarticle'),  
 
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
-
 
     path('about/', about_us, name='about'),
 

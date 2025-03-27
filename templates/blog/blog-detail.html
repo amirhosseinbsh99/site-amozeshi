@@ -4,15 +4,41 @@
 {% load ratings %}
 
 {% block content %}
+<style>
+/* General responsive styling for the image */
+.responsive-image {
+    max-width: 100%; /* Adjust size responsively */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain;
+    display: block; /* Ensures visibility */
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+/* Container for proper centering */
+.text-center {
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    padding: 20px; /* Optional spacing */
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .text-center {
+        padding: 10px; /* Adjust spacing for smaller screens */
+    }
+
+    .border-2 {
+        border-width: 1px; /* Reduce border size for smaller devices */
+    }
+}
+</style>
+
 <!-- Image Header -->
-<div class="text-center pt-5 w-full flex justify-center px-5 pb-3 mx-5">
-    <div class="flex justify-center w-full px-5 mx-5">
-        <div class="border-2 border-gray-300 p-4 px-5 rounded-lg flex justify-center ml-2">
-            <img src="{{ course.image.url }}" alt="IMAGE" class=" w-50 h-40 object-fit">
-        </div>
-    </div>
+<div class="border-2 border-gray-300 text-center p-4 mx-5 px-5 rounded-lg">
+    <img src="{{ course.image.url }}" alt="IMAGE" class="responsive-image">
 </div>
-<!-- end image header -->
+
 
 <!-- for title and general information of blog -->
 <div class="py-1">
@@ -48,7 +74,6 @@
 					<div dir="rtl" style="font-size:13px;"> {{course.time_of_study}} دقیقه </div>
 				</div>
 
-
 			</div>
 		</div>
 	</div>
@@ -57,7 +82,6 @@
 
 
 <!-- seccond section -->
-
 
 <div class="py-3">
 	<div class="container">
@@ -150,7 +174,7 @@
           </div>
         </form>
         {% else %}
-        <h2>ابتدا <a href="../../accounts/login" style="color: cyan;">وارد شوید</a></h2>
+        <h2>ابتدا <a href="{% url 'accounts:login_view' %}" style="color: cyan;">وارد شوید</a></h2>
         {% endif %}
 
         

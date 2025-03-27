@@ -64,7 +64,7 @@
             background: white;
             color:black;
             padding: 20px;
-            width:200;
+            width:300;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             transition: 0.3s;
@@ -138,9 +138,12 @@
         <div class="header py-4 px-6 bg-white shadow-lg">
             <h1 class="text-xl font-semibold text-gray-700">دوره‌ها</h1>
         </div>
-
+    
         <!-- Search Bar -->
-        <input type="text" class="search-bar" placeholder="جستجو در دوره‌ها🔍">
+        <div class="mt-4 ">
+        <input type="text" class="search-bar mx-2 mt-2" placeholder="جستجو در دوره‌ها 🔍 ">
+        <a class="btn btn-primary position-absolute px-2" href="{% url 'accounts:create_course_view' %}">افزودن دوره +</a>
+        </div>
 
         <!-- Courses -->
         <div class="grid mt-3 px-4">

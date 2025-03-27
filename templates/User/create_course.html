@@ -54,20 +54,7 @@
         .btn-custom:hover {
             background-color: #00c0a5;
         }
-        .btn-red {
-            background-color:rgb(213, 0, 0);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 7px;
-            transition: 0.3s;
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration:none;
-            
-        }
-        .btn-red:hover {
-            background-color:rgb(119, 18, 18);
-        }
+
         .form-input {
             width: 100%;
             padding: 12px 16px;
@@ -154,11 +141,11 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- Course Image -->
-                <div class="mb-4">
+                <div class="mb-3 ">
                     <label for="image" class="block text-gray-700 font-semibold">تصویر دوره:</label>
                     <!-- Make the image clickable with an edit icon -->
                     <label for="image-input" class="image-container">
-                        <img id="course-image" src="{% if course.image %}{{ course.image.url }}{% else %}/static/images/default-course.jpg{% endif %}" alt="{{ course.title }}" class="w-50 h-64 object-cover rounded-lg mb-4">
+                        <img id="course-image" src="{% static 'blog/images/add-image-photo-icon.png' %}" class="w-50 h-64 object-cover rounded-lg mb-4">
                         <div class="edit-icon">✏️</div>
                     </label>
                     <!-- Hidden file input field -->
@@ -166,39 +153,36 @@
                 </div>
 
                 <!-- Course Title -->
-                <div class="mb-4">
-                    <label for="title" class="block text-gray-700 font-semibold">عنوان دوره</label>
-                    <input type="text" name="title" id="title" value="{{ course.title }}" class="form-input" required>
-                </div>
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-semibold">عنوان دوره</label>
+            <input type="text" name="title" id="title" class="form-input" placeholder="مثال: دوره آموزش جنگو" required>
+        </div>
 
-                <!-- Course content -->
-                <div class="mb-4">
-                    <label for="content" class="block text-gray-700 font-semibold">توضیحات دوره</label>
-                    <textarea name="content" id="content" class="form-input" rows="4" required>{{ course.content }}</textarea>
-                </div>
-                <!-- Course Title -->
-                <div class="mb-4">
-                    <label for="time_of_study" class="block text-gray-700 font-semibold">مقدار زمان ساعتی دوره</label>
-                    <input type="text" name="time_of_study" id="time_of_study" value="{{ course.time_of_study }}" class="form-input" required>
-                </div>
-                <!-- Course Title -->
-                <div class="mb-4">
-                    <label for="teacher" class="block text-gray-700 font-semibold">مدرس دوره</label>
-                    <input type="text" name="teacher" id="teacher" value="{{ course.teacher }}" class="form-input" required>
-                </div>
+        <!-- Course content -->
+        <div class="mb-4">
+            <label for="content" class="block text-gray-700 font-semibold">توضیحات دوره</label>
+            <textarea name="content" id="content" class="form-input" rows="4" placeholder="مثال: در این دوره با مفاهیم پایه جنگو آشنا خواهید شد." required>{{ course.content }}</textarea>
+        </div>
+
+        <!-- Course Time -->
+        <div class="mb-4">
+            <label for="time_of_study" class="block text-gray-700 font-semibold">مقدار زمان ساعتی دوره</label>
+            <input type="text" name="time_of_study" id="time_of_study" value="{{ course.time_of_study }}" class="form-input" placeholder="مثال: 40 " required>
+        </div>
+
+        <!-- Course Teacher -->
+        <div class="mb-4">
+            <label for="teacher" class="block text-gray-700 font-semibold">مدرس دوره</label>
+            <input type="text" name="teacher" id="teacher" value="{{ course.teacher }}" class="form-input" placeholder="مثال: علی رضایی" required>
+        </div>
+
 
                 <!-- Submit Button -->
                 <div class="mb-4">
                     <button type="submit" class="btn-custom">ذخیره تغییرات</button>
                 </div>
-            
             </form>
-            <form method="post" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این دوره را حذف کنید؟');">
-            {% csrf_token %}
-                <div class="mb-4">
-                    <button type="submit" name="delete_course" class="btn-red"> حذف دوره</button>
-                </div>
-            </form>
+
             <a href="{% url 'accounts:courses_view' %}" class="btn-custom">بازگشت</a>
         </div>
     </div>

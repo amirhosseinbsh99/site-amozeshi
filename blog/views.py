@@ -32,12 +32,10 @@ def SearchView(request):
     return render(request, 'blog/search_resualts.html',{'resualts': results , 'query': query})
 
 
-# a view for detail of blog
 def blog_detail(request, id):
     course = Course.objects.get(pk=id, status=True)
     comments = course.comments.filter(active=True)
     
-# Comment posted
     if request.method == 'POST':
         comment_content = request.POST.get('comment_content')
 
@@ -106,7 +104,7 @@ def review_articles(request):
         return HttpResponse('what??bro you are normal user this page is for superuser')
         
 @login_required
-def    accept_article(request,article_id):
+def accept_article(request,article_id):
     article=Article.objects.get(id=article_id)
     if request.user.is_superuser:
         article.status='published'

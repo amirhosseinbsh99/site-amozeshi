@@ -1,0 +1,221 @@
+{% load static %}
+{% load tailwind_tags %}
+{% load django_browser_reload %}
+
+{% tailwind_css %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="icon" type="image/x-icon" href="{% static 'blog/images/logo.ico' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'blog/plugins/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- cdn font vazir -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/main.css' %}">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'blog/styles/blogs.css' %}">
+    <title>ویرایش پروفایل</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray */
+            font-family: 'Tahoma', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #f8f9fa;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle {
+                display: block !important;  /* Force show button in mobile view */
+            }
+        }
+
+        /* Toggle button */
+        .sidebar-toggle {
+            display: none;  /* Hide by default for desktop */
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-container .form-group label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-container .form-group input, 
+        .form-container .form-group select, 
+        .form-container .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container .form-group input[type="file"] {
+            padding: 3px;
+        }
+
+        .form-container .form-group button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        {% include 'User/_sidebar.html' %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Toggle Button for Mobile -->
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="sidebarToggle()">☰</button>
+
+        <!-- Header -->
+        <div class="header py-4 px-6 bg-white shadow-lg">
+            <h1 class="text-xl font-semibold text-gray-700">ویرایش پروفایل</h1>
+        </div>
+
+        <!-- Messages -->
+        <div class="container mt-4">
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Dashboard Edit Form -->
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">نام کاربری</label>
+                    <input type="text" name="username" value="{{ user.username }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">ایمیل</label>
+                    <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">نام</label>
+                    <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">نام خانوادگی</label>
+                    <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">به‌روزرسانی</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle Sidebar for Mobile
+        function sidebarToggle() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+
+{% endblock content %}

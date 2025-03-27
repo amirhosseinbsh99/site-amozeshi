@@ -7,15 +7,26 @@
     <title>Sidebar</title>
     <style>
         .sidebar {
-            background-color: #343a40;
-            color: white;
-            width: 250px;
-            padding: 20px;
+        position: fixed;
+        top: 0;
+        left:-250 ; /* Initially hidden */
+        width: 250px;
+        height: 100vh;
+        background-color: #333;
+        transition: left 0.3s ease-in-out;
+    }
+        .sidebar.active {
+            left: -250px;
+        }
+        @media (min-width: 320px) {
+            .sidebar {
             position: fixed;
-            height: 100%;
             top: 0;
-            left: 0;
-            transition: all 0.3s;
+            left:0 ; /* Initially hidden */
+            width: 250px;
+            height: 100vh;
+            background-color: #333;
+            transition: left 0.3s ease-in-out;
         }
         .sidebar a {
             display: flex;
@@ -35,17 +46,40 @@
         .sidebar .icon {
             margin-left: 10px;
         }
+        .sidebar .logout {
+            margin-top: auto;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .sidebar .logout:hover {
+            background-color: #c82333;
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="{% url 'blog_home' %}" class="text-sm"><i class="icon">🏠</i> صفحه اصلی</a>
-        <h2 class="text-center font-semibold">داشبورد</h2>
-        <a href="{% url 'accounts:dashboard_view' %}" class="text-sm"><i class="icon">📊</i> آمار</a>
-        <a href="{% url 'accounts:courses_view' %}" class="text-sm"><i class="icon">📝</i> دوره‌ها</a>
-        <a href="#" class="text-sm"><i class="icon">📝</i> مقالات</a>
-        <a href="#" class="text-sm"><i class="icon">⚙️</i> تنظیمات</a>
-    </div>
+    <div id="sidebar" class="sidebar">
     
+    {% if is_admin %}
+        <a href="{% url 'blog_home' %}" class="text-sm"><i class="icon">🏠</i> صفحه اصلی</a>
+        <h2 class="text-center text-white font-semibold">داشبورد</h2>
+        <a href="{% url 'accounts:dashboard_view' %}" class="text-sm"><i class="icon">📊</i> آمار</a>
+        <a href="{% url 'accounts:courses_view' %}" class="text-sm"><i class="icon">📚</i> دوره‌ها</a>
+        <a href="#" class="text-sm"><i class="icon">💬</i> کامنت ها</a>
+        <a href="{% url 'accounts:user_dashboard_edit' %}" class="text-sm"><i class="icon">⚙️</i> تنظیمات</a>
+        <a href="{% url 'accounts:logout_view' %}" class="logout"><i class="icon">🚪</i> خروج</a>
+        </div>
+    {% else %}
+        <a href="{% url 'blog_home' %}" class="text-sm"><i class="icon">🏠</i> صفحه اصلی</a>
+        <h2 class="text-center text-white font-semibold">داشبورد</h2>
+        <a href="{% url 'accounts:dashboard_view' %}" class="text-sm"><i class="icon">📊</i> پروفایل</a>
+        <a href="{% url 'accounts:courses_view' %}" class="text-sm"><i class="icon">📝</i> دوره‌های من</a>
+        <a href="{% url 'accounts:user_dashboard_edit' %}" class="text-sm"><i class="icon">⚙️</i> تنظیمات</a>
+        <a href="{% url 'accounts:logout_view' %}" class="logout"><i class="icon">🚪</i> خروج</a>
+    </div>
+    {% endif %}
+    
+
 </body>
 </html>

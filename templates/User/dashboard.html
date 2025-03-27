@@ -36,19 +36,27 @@
             margin: 0;
             overflow-x: hidden;
         }
-        
+
+        /* Header Styles */
         .header {
-            background: white;
-            padding: 15px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: #ffffff;
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            margin-left: -250px;
         }
+
+        @media (min-width: 768px) {
+            .header {
+                margin-left: 250px;
+            }
+        }
+
         .header h1 {
             font-size: 1.5rem;
             color: #333;
         }
+
         .header .profile {
             background-color: #00d5b6;
             padding: 8px 15px;
@@ -57,10 +65,13 @@
             font-size: 0.9rem;
             transition: 0.3s;
         }
+
         .header .profile:hover {
             background-color: #00c0a5;
             transform: scale(1.05);
         }
+
+        /* Card Styles */
         .card {
             background: white;
             padding: 20px;
@@ -69,10 +80,13 @@
             transition: 0.3s;
             cursor: pointer;
         }
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
         }
+
+        /* Button Styles */
         .btn-custom {
             background-color: #00d5b6;
             color: white;
@@ -82,75 +96,115 @@
             font-size: 1.1rem;
             text-transform: uppercase;
         }
+
         .btn-custom:hover {
             background-color: #00c0a5;
             transform: translateY(-3px);
         }
+
+        /* Main Content */
         .main-content {
-            margin-left: 250px;
             padding: 30px;
-            width: calc(100% - 250px);
             overflow-y: auto;
             background-color: #e9ecef;
         }
+
+        
+        /* Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
             gap: 16px;
         }
+
         @media (min-width: 768px) {
             .grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        /* Widget Styles */
         .widget {
             background-color: #ffffff;
             padding: 30px;
-            width: 400px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: 0.3s;
+            width: 350px;
         }
+
+        @media (max-width: 768px) {
+            .widget {
+                width: 250px;
+            }
+        }
+
         .widget .title {
             font-size: 20px;
             font-weight: bold;
             color: black;
         }
+
         .widget .count {
             font-size: 32px;
             font-weight: bold;
             color: #28a745;
         }
+
         .widget .icon {
             font-size: 35px;
             color: #00d5b6;
         }
+
+        /* Sidebar */
         .sidebar a.active {
             background-color: #00d5b6;
             transform: translateX(5px);
+        }
+
+        /* Mobile Button */
+        .mobile-button {
+            display: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sidebar.active {
+            left: -250px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-button {
+                display: block;
+            }
         }
     </style>
 </head>
 
 <body class="bg-gray-100">
+<!-- Sidebar -->
+{% include 'User/_sidebar.html' %}
 
-    <!-- Sidebar -->
-    {% include 'User/_sidebar.html' %}
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div id="main-content" class="main-content">
+    <button class="mobile-button" onclick="toggleSidebar()">☰ منو</button>
         <!-- Header -->
-        <div class="header">
+        <div class="header py-4 px-3 shadow-lg">
             <h1 class="text-xl font-semibold text-gray-700">
-                {% if is_admin == true %}داشبورد مدیر{% else %}داشبورد کاربر{% endif %}
+                {% if is_admin %}داشبورد مدیر{% else %}داشبورد کاربر{% endif %}
             </h1>
-
         </div>
-
+        
         <!-- Cards and Widgets -->
-        <div class="grid mt-3 px-4">
-            {% if request.user.is_authenticated %}
-                {% if is_admin == true %}
+        <div class="grid mt-3 ">
+            
+                {% if is_admin %}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-center">
                     <div class="widget">
                         <div class="flex items-center justify-between">
@@ -184,7 +238,7 @@
                     <div class="widget">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="title">تعداد خریداران دوره (فیکس شود)</p>
+                                <p class="title">تعداد خریداران دوره </p>
                                 <p class="count">{{ article_count }}</p>
                             </div>
                             <i class="icon">💳</i>
@@ -210,14 +264,19 @@
                     </div>
                 </div>
                 {% endif %}
-            {% else %}
-            <p class="text-center text-gray-700 mt-6">
-                لطفاً <a href="{% url 'login' %}" class="text-blue-500">وارد شوید</a> تا به داشبورد دسترسی داشته باشید.
-            </p>
-            {% endif %}
+            
         </div>
     </div>
+<script>
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    sidebar.classList.toggle('active');  // Toggle the sidebar visibility
 
+    // Toggle the 'shifted' class on the main content when sidebar is active
+    mainContent.classList.toggle('shifted', sidebar.classList.contains('active'));
+}
+</script>
 </body>
 </html>
 
