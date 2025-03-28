@@ -16,7 +16,7 @@ class MyUser(AbstractUser):
 
 	is_admin = models.BooleanField(default=False)
 	
-
+	
 
 
 

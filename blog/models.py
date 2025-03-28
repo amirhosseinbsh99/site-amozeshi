@@ -33,7 +33,14 @@ class Course(models.Model):
 
     teacher = models.CharField(max_length = 150)
 
+    price = models.IntegerField(null = True)
 
+    discount_price = models.IntegerField(null=True, blank=True)  # قیمت با تخفیف (اختیاری)
+    
+    def get_final_price(self):
+        """محاسبه قیمت نهایی با تخفیف (در صورت وجود)"""
+        return self.discount_price if self.discount_price else self.price
+    
     # Methods
     def __str__(self):
 
@@ -100,5 +107,30 @@ class Article(models.Model):
         return '{}'.format(self.title)
 
 
-    
+class Basket(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.user.username}"
+
+class BasketItem(models.Model):
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE, related_name="items")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.basket.user.username} - {self.course.title}"
+
+class Order(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    status = models.CharField(
+        max_length=20,
+        choices=[('pending', 'در انتظار پرداخت'), ('paid', 'پرداخت شده')],
+        default='pending'
+    )
+    amount = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course.title} - {self.status}"

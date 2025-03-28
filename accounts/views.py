@@ -12,7 +12,7 @@ from django.contrib.auth import logout
 from kavenegar import *
 from blog.models import Article
 from django.contrib.auth.decorators import login_required
-
+from blog.models import Basket,BasketItem
 
 def login_view(request):
 
@@ -169,7 +169,7 @@ def create_course_view(request):
         image = request.FILES.get('image')
         teacher = request.POST.get('teacher')
         time_of_study = request.POST.get('time_of_study')
-
+        price = request.POST.get('price')
         # Replace spaces in the title with hyphens and create the slug
         slug = title.replace(" ", "-").lower()
 
@@ -180,6 +180,7 @@ def create_course_view(request):
             teacher=teacher,
             time_of_study=time_of_study,
             image=image,
+            price=price,
             slug=slug
         )
         course.save()  # Save the course instance
@@ -274,6 +275,9 @@ def kave_negar_token_send(request):
             MyUser.objects.filter(token_send=sms_code).delete()
             User = MyUser.objects.create_user(username=phone_number,password=password,phone_number=phone_number)
 
+            user = MyUser.objects.get(phone_number=phone_number)  
+            Basket.objects.create(user=user)  
+            baskets = Basket.objects.get(user=user)  
 
             return redirect('accounts:dashboard_view')
         else:
@@ -300,6 +304,18 @@ def article_list_view(request):
 
 
 
+def add_to_basket(request, course_id):
+    course = get_object_or_404(Course, id=course_id, status=True)
+    basket, created = Basket.objects.get_or_create(user=request.user)
 
+    # بررسی اینکه دوره قبلاً در سبد خرید هست یا نه
+    item, created = BasketItem.objects.get_or_create(basket=basket, course=course)
+
+    if not created:
+        messages.warning(request, "این دوره قبلاً به سبد خرید اضافه شده است.")
+    else:
+        messages.success(request, "دوره به سبد خرید اضافه شد.")
+
+    return redirect("basket_detail")
 
     

@@ -35,7 +35,7 @@ def SearchView(request):
 def blog_detail(request, id):
     course = Course.objects.get(pk=id, status=True)
     comments = course.comments.filter(active=True)
-    
+    price = course.price
     if request.method == 'POST':
         comment_content = request.POST.get('comment_content')
 
@@ -62,8 +62,10 @@ def blog_detail(request, id):
                 )
                 messages.success(request, 'نظر شما ثبت شد')
                 return redirect('.')
+            
+    
 
-    return render(request, 'blog/blog-detail.html', {'course': course, 'comments': comments})
+    return render(request, 'blog/blog-detail.html', {'course': course, 'comments': comments, 'price':price})
 
 
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Course , Category, Comment, Article
+from .models import Course , Category, Comment, Article,Basket,BasketItem
 
 # Register your models here.
 
@@ -16,3 +16,6 @@ class CommentAdmin(admin.ModelAdmin):
 
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
+admin.site.register(Basket)
+admin.site.register(BasketItem)
+
