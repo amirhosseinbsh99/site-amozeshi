@@ -138,12 +138,14 @@ def edit_course_view(request, course_id):
         image = request.FILES.get('image')
         teacher = request.POST.get('teacher')
         time_of_study = request.POST.get('time_of_study')
+        status = request.POST.get('status') == 'on'
 
         # Update course fields
         course.title = title
         course.content = content
         course.teacher = teacher
         course.time_of_study = time_of_study
+        course.status = status
 
         # Save image if a new one was uploaded
         if image:

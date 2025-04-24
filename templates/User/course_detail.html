@@ -186,11 +186,18 @@
                     <label for="teacher" class="block text-gray-700 font-semibold">مدرس دوره</label>
                     <input type="text" name="teacher" id="teacher" value="{{ course.teacher }}" class="form-input" required>
                 </div>
-
+                <!-- Course Status -->
+                <div class="mb-4">
+                    <label for="status" class="block text-gray-700 font-semibold">وضعیت دوره</label>
+                    <input type="checkbox" name="status" id="status" {% if course.status %}checked{% endif %}>
+                    <label for="status">فعال</label>
+                </div>
                 <!-- Submit Button -->
                 <div class="mb-4">
                     <button type="submit" class="btn-custom">ذخیره تغییرات</button>
                 </div>
+                
+
             
             </form>
             <form method="post" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این دوره را حذف کنید؟');">

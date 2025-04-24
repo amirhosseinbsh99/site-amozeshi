@@ -107,7 +107,14 @@
   <div class="container">
     <div class="row" dir="rtl">
       <div class="col-12 col-md-9">
-        <h3>قیمت:{{course.price}}</h3>
+        <h3 class="text-end fw-bold" style="color: #00d5b6; font-size: 1.75rem;">
+          قیمت:
+          <span style="color: #333;">{{ course.price }} تومان</span>
+        </h3>
+
+        <div class="">
+          <input type="submit" class="btn btn-primary px-5" value="خرید">
+        </div>
         <!-- my 6th form -->
         <div class="d-flex w-100 justify-content-center align-items-center flex-column mt-5">
           
